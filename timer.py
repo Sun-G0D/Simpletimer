@@ -32,6 +32,12 @@ def stop_timer():
     global is_counting
     is_counting = 1
 
+def reset_timer():
+    global is_counting
+    time_left_var.set(0)
+    is_counting = 0
+    time_left_label.config(text=f"{str(timedelta(seconds=time_left_var.get()))}")
+
 time_left_var = IntVar(root, 0)
 time_var = IntVar(root, 0)
 time_label = Label(root, text = 'Input Time', font=('calibre',10,'bold'))
@@ -39,12 +45,14 @@ time_entry = Entry(root, textvariable = time_var, font=('calibre',10,'normal'))
 time_left_label = Label(root, text = 'Time Left', font=('calibre',10,'bold'))
 start_button = Button(root, text="Start", command=start_timer)
 stop_button = Button(root, text="Stop", command=stop_timer)
+reset_button = Button(root, text="Reset", command=reset_timer)
 
 time_label.grid(row=0,column=0)
 time_entry.grid(row=0,column=1)
 time_left_label.grid(row=1,column=1)
 start_button.grid(row=2,column=1)
 stop_button.grid(row=2,column=2)
+reset_button.grid(row=2,column=3)
 
 update_timer()
 
