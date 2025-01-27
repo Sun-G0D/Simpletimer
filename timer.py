@@ -9,16 +9,23 @@ root.geometry('350x200')
 root.resizable(True, True)
 
 def update_timer():
+    global is_counting
+
     if time_left_var.get() > 0:
+        is_counting = 1
         time_left_var.set(time_left_var.get() - 1)
         time_left_label.config(text=f"{str(timedelta(seconds=time_left_var.get()))}")
         root.after(1000, update_timer)  # Call again after 1 second
+    else:
+        is_counting = 0
+
 
 def start_timer():
-    try:
-        time_left_var.set(time_left_var.get() + time_var.get())
-    except ValueError:
-        time_left_label.config(text="Invalid Input") # Handle non-integer input
+    global is_counting
+    time_left_var.set(time_left_var.get() + time_var.get())
+    if is_counting != 1:
+        update_timer()
+
 
 time_left_var = IntVar(root, 0)
 time_var = IntVar(root, 0)
