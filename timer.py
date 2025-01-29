@@ -23,13 +23,15 @@ def done(message):
 def update_timer():
     global is_counting
 
+    time_left_label.config(text=f"{str(timedelta(seconds=time_left_var.get()))}")
+
     if time_left_var.get() > 0 and is_counting == 2:
         time_left_var.set(time_left_var.get() - 1)
-        time_left_label.config(text=f"{str(timedelta(seconds=time_left_var.get()))}")
         root.after(1000, update_timer)  # Call again after 1 second
     elif is_counting != 1:
         is_counting = 0
-        winsound.PlaySound("SystemHand", winsound.SND_ALIAS)
+        time_left_var.set(0)
+        winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
         done("timer done")
 
 
